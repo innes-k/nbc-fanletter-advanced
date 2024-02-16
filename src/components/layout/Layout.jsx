@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function Layout() {
   return (
     <NavBar>
-      <div>HOME</div>
+      <LinkStyle to="/">HOME</LinkStyle>
       <NavRight>
-        <p>내 프로필</p>
+        <LinkStyle to="profile">내 프로필</LinkStyle>
         <p>로그아웃</p>
       </NavRight>
     </NavBar>
@@ -28,4 +29,9 @@ const NavBar = styled.nav`
 const NavRight = styled.div`
   display: flex;
   gap: 20px;
+`;
+
+const LinkStyle = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
