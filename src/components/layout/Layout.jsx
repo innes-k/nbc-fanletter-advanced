@@ -7,8 +7,8 @@ function Layout() {
     <NavBar>
       <LinkStyle to="/">HOME</LinkStyle>
       <NavRight>
-        <LinkStyle to="profile">내 프로필</LinkStyle>
-        <p>로그아웃</p>
+        <LinkStyle to="/profile">내 프로필</LinkStyle>
+        <LinkStyle to="/login">로그아웃</LinkStyle>
       </NavRight>
     </NavBar>
   );
