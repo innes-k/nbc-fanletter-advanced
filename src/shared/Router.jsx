@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 export default function Router() {
   return (
     <BrowserRouter>
+      {/* 토큰이 있는경우만 layout 뜨게 */}
       <Layout />
       <Routes>
         <Route path="/" element={<Home />} />

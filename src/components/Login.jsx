@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 function Login() {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const onIsSignUpHandler = () => {
+    setIsSignUp((prevIsSignUP) => !prevIsSignUP);
+  };
+
   return (
     <Container>
-      <ProfileBox>
-        <H1>로그인</H1>
-        <Input placeholder="아이디 (4~10글자)" />
-        <Input placeholder="비밀번호 (4~15글자)" />
-        <Btn>로그인</Btn>
-        <H2>회원가입</H2>
-      </ProfileBox>
+      {!isSignUp ? (
+        // 로그인 창
+        <ProfileBox>
+          <H1>로그인</H1>
+          <Input placeholder="아이디 (4~10글자)" />
+          <Input placeholder="비밀번호 (4~15글자)" />
+          <Btn>로그인</Btn>
+          <H2 onClick={onIsSignUpHandler}>회원가입</H2>
+        </ProfileBox>
+      ) : (
+        // 회원가입 창
+        <ProfileBox>
+          <H1>회원가입</H1>
+          <Input placeholder="아이디 (4~10글자)" />
+          <Input placeholder="비밀번호 (4~15글자)" />
+          <Input placeholder="닉네임 (1~10글자)" />
+          <Btn>회원가입</Btn>
+          <H2 onClick={onIsSignUpHandler}>로그인</H2>
+        </ProfileBox>
+      )}
     </Container>
   );
 }
@@ -30,12 +48,11 @@ const ProfileBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   background-color: white;
   border-radius: 2rem;
   padding: 20px;
   width: 500px;
-  height: 350px;
 `;
 
 const H1 = styled.p`
