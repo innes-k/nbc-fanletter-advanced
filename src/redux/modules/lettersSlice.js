@@ -27,5 +27,5 @@ const lettersSlice = createSlice({
   },
 });
 
-export default lettersSlice.reducer;
+export const letters = lettersSlice.reducer;
 export const { addLetter, deleteLetter, editLetter } = lettersSlice.actions;
