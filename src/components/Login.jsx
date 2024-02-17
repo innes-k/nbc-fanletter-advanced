@@ -9,6 +9,9 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
 
   // 회원가입창으로 전환 핸들러
   const onIsSignUpHandler = () => {
+    setUserId("");
+    setUserPw("");
+    setUserNickname("");
     setIsSignUp((prevIsSignUP) => !prevIsSignUP);
   };
 
