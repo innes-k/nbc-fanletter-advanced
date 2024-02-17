@@ -1,5 +1,5 @@
 import fakeData from "fakeData.json";
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = fakeData;
 
