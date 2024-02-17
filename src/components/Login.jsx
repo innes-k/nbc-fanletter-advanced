@@ -3,12 +3,56 @@ import styled from "styled-components";
 
 function Login({ isLoggedIn, setIsLoggedIn }) {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
+  const [userNickname, setUserNickname] = useState("");
+
+  // 회원가입창으로 전환 핸들러
   const onIsSignUpHandler = () => {
     setIsSignUp((prevIsSignUP) => !prevIsSignUP);
   };
+
+  // 로그인버튼 클릭 핸들러
   const onIsLoggedInHandler = () => {
-    setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+    isValidId &&
+      isValidPw &&
+      setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
   };
+
+  // 회원가입버튼 클릭 핸들러
+  const onSignUpHandler = () => {
+    isValidId &&
+      isValidPw &&
+      isValidNickname &&
+      setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+  };
+
+  // 아이디 onChange
+  const inputId = (e) => {
+    setUserId(e.target.value);
+  };
+
+  // 아이디 형식 제한
+  const idRegex = /^[a-zA-Z0-9]{4,10}$/;
+  const isValidId = idRegex.test(userId);
+
+  // 비밀번호 onChange
+  const inputPw = (e) => {
+    setUserPw(e.target.value);
+  };
+
+  // 비밀번호 형식 제한
+  const passwordRegex = /^.{4,15}$/;
+  const isValidPw = passwordRegex.test(userPw);
+
+  // 닉네임 onChange
+  const inputNickname = (e) => {
+    setUserNickname(e.target.value);
+  };
+
+  // 닉네임 형식 제한
+  const nicknameRegex = /^.{1,10}$/;
+  const isValidNickname = nicknameRegex.test(userNickname);
 
   return (
     <StContainer>
@@ -16,8 +60,16 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
         // 로그인 창
         <StProfileBox>
           <StH1>로그인</StH1>
-          <StInput placeholder="아이디 (4~10글자)" />
-          <StInput placeholder="비밀번호 (4~15글자)" />
+          <StInput
+            placeholder="아이디 (4~10글자)"
+            value={userId}
+            onChange={inputId}
+          />
+          <StInput
+            placeholder="비밀번호 (4~15글자)"
+            value={userPw}
+            onChange={inputPw}
+          />
           <StBtn onClick={onIsLoggedInHandler}>로그인</StBtn>
           <StH2 onClick={onIsSignUpHandler}>회원가입</StH2>
         </StProfileBox>
@@ -25,10 +77,22 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
         // 회원가입 창
         <StProfileBox>
           <StH1>회원가입</StH1>
-          <StInput placeholder="아이디 (4~10글자)" />
-          <StInput placeholder="비밀번호 (4~15글자)" />
-          <StInput placeholder="닉네임 (1~10글자)" />
-          <StBtn>회원가입</StBtn>
+          <StInput
+            placeholder="아이디 (4~10글자)"
+            value={userId}
+            onChange={inputId}
+          />
+          <StInput
+            placeholder="비밀번호 (4~15글자)"
+            value={userPw}
+            onChange={inputPw}
+          />
+          <StInput
+            placeholder="닉네임 (1~10글자)"
+            value={userNickname}
+            onChange={inputNickname}
+          />
+          <StBtn onClick={onSignUpHandler}>회원가입</StBtn>
           <StH2 onClick={onIsSignUpHandler}>로그인</StH2>
         </StProfileBox>
       )}
