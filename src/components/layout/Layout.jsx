@@ -2,13 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function Layout() {
+function Layout({ isLoggedIn, setIsLoggedIn }) {
+  const onIsLoggedInHandler = () => {
+    setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+  };
+
   return (
     <StNavBar>
       <StLink to="/">HOME</StLink>
       <StNavRight>
         <StLink to="/profile">내 프로필</StLink>
-        <StLink to="/login">로그아웃</StLink>
+        <StLink to="/login" onClick={onIsLoggedInHandler}>
+          로그아웃
+        </StLink>
       </StNavRight>
     </StNavBar>
   );

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-function Login() {
+function Login({ isLoggedIn, setIsLoggedIn }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const onIsSignUpHandler = () => {
     setIsSignUp((prevIsSignUP) => !prevIsSignUP);
+  };
+  const onIsLoggedInHandler = () => {
+    setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
   };
 
   return (
@@ -15,7 +18,7 @@ function Login() {
           <StH1>로그인</StH1>
           <StInput placeholder="아이디 (4~10글자)" />
           <StInput placeholder="비밀번호 (4~15글자)" />
-          <StBtn>로그인</StBtn>
+          <StBtn onClick={onIsLoggedInHandler}>로그인</StBtn>
           <StH2 onClick={onIsSignUpHandler}>회원가입</StH2>
         </StProfileBox>
       ) : (
