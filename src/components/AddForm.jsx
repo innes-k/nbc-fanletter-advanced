@@ -23,7 +23,7 @@ export default function AddForm() {
       content,
       avatar: null,
       writedTo: member,
-      createdAt: new Date(),
+      createdAt: new Date().toString(),
     };
 
     dispatch(addLetter(newLetter));
