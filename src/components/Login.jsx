@@ -8,34 +8,34 @@ function Login() {
   };
 
   return (
-    <Container>
+    <StContainer>
       {!isSignUp ? (
         // 로그인 창
-        <ProfileBox>
-          <H1>로그인</H1>
-          <Input placeholder="아이디 (4~10글자)" />
-          <Input placeholder="비밀번호 (4~15글자)" />
-          <Btn>로그인</Btn>
-          <H2 onClick={onIsSignUpHandler}>회원가입</H2>
-        </ProfileBox>
+        <StProfileBox>
+          <StH1>로그인</StH1>
+          <StInput placeholder="아이디 (4~10글자)" />
+          <StInput placeholder="비밀번호 (4~15글자)" />
+          <StBtn>로그인</StBtn>
+          <StH2 onClick={onIsSignUpHandler}>회원가입</StH2>
+        </StProfileBox>
       ) : (
         // 회원가입 창
-        <ProfileBox>
-          <H1>회원가입</H1>
-          <Input placeholder="아이디 (4~10글자)" />
-          <Input placeholder="비밀번호 (4~15글자)" />
-          <Input placeholder="닉네임 (1~10글자)" />
-          <Btn>회원가입</Btn>
-          <H2 onClick={onIsSignUpHandler}>로그인</H2>
-        </ProfileBox>
+        <StProfileBox>
+          <StH1>회원가입</StH1>
+          <StInput placeholder="아이디 (4~10글자)" />
+          <StInput placeholder="비밀번호 (4~15글자)" />
+          <StInput placeholder="닉네임 (1~10글자)" />
+          <StBtn>회원가입</StBtn>
+          <StH2 onClick={onIsSignUpHandler}>로그인</StH2>
+        </StProfileBox>
       )}
-    </Container>
+    </StContainer>
   );
 }
 
 export default Login;
 
-const Container = styled.div`
+const StContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +43,7 @@ const Container = styled.div`
   background-color: #e0dfdf;
 `;
 
-const ProfileBox = styled.div`
+const StProfileBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -55,18 +55,18 @@ const ProfileBox = styled.div`
   width: 500px;
 `;
 
-const H1 = styled.p`
+const StH1 = styled.p`
   font-size: 30px;
 `;
 
-const Input = styled.input`
+const StInput = styled.input`
   width: 100%;
   border: 0;
   border-bottom: 1px solid black;
   height: 40px;
 `;
 
-const Btn = styled.button`
+const StBtn = styled.button`
   width: 100%;
   height: 60px;
   color: white;
@@ -77,6 +77,6 @@ const Btn = styled.button`
   cursor: pointer;
 `;
 
-const H2 = styled.p`
+const StH2 = styled.p`
   cursor: pointer;
 `;

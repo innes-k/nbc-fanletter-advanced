@@ -4,19 +4,19 @@ import styled from "styled-components";
 
 function Layout() {
   return (
-    <NavBar>
-      <LinkStyle to="/">HOME</LinkStyle>
-      <NavRight>
-        <LinkStyle to="/profile">내 프로필</LinkStyle>
-        <LinkStyle to="/login">로그아웃</LinkStyle>
-      </NavRight>
-    </NavBar>
+    <StNavBar>
+      <StLink to="/">HOME</StLink>
+      <StNavRight>
+        <StLink to="/profile">내 프로필</StLink>
+        <StLink to="/login">로그아웃</StLink>
+      </StNavRight>
+    </StNavBar>
   );
 }
 
 export default Layout;
 
-const NavBar = styled.nav`
+const StNavBar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,12 +26,12 @@ const NavBar = styled.nav`
   height: 40px;
 `;
 
-const NavRight = styled.div`
+const StNavRight = styled.div`
   display: flex;
   gap: 20px;
 `;
 
-const LinkStyle = styled(Link)`
+const StLink = styled(Link)`
   text-decoration: none;
   color: black;
 `;
