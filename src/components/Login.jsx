@@ -24,9 +24,7 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
 
   // 회원가입버튼 클릭 핸들러
   const onSignUpHandler = () => {
-    isValidId && isValidPw && isValidNickname && setUserId("");
-    setUserPw("");
-    setIsSignUp((prevIsSignUP) => !prevIsSignUP);
+    isValidId && isValidPw && isValidNickname && onIsSignUpHandler();
   };
 
   // 아이디 onChange
