@@ -21,3 +21,17 @@ export const login = async (userId, userPw) => {
   const loggedInUserToken = loggedInUserInfo.accessToken;
   localStorage.setItem("loggedInUserToken", loggedInUserToken);
 };
+
+// 로그인된 유저정보 가져오기
+export const getLoggedInUserInfo = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(
+    "https://moneyfulpublicpolicy.co.kr/user",
+    config
+  );
+  return response.data;
+};

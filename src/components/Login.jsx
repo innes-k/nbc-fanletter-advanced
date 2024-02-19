@@ -1,5 +1,7 @@
-import { login, signUp } from "apis/users";
+import { getLoggedInUserInfo, login, signUp } from "apis/users";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
 function Login({ isLoggedIn, setIsLoggedIn }) {
@@ -16,14 +18,22 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
     setIsSignUp((prevIsSignUP) => !prevIsSignUP);
   };
 
+  const dispatch = useDispatch();
+
   // 로그인버튼 클릭 핸들러
-  const onIsLoggedInHandler = () => {
+  const onIsLoggedInHandler = async () => {
     if (isValidId && isValidPw) {
       login(userId, userPw);
       setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
     } else {
       alert("입력하신 값을 확인해주세요.");
     }
+
+    const accessToken = localStorage.getItem("loggedInUserToken");
+    const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
+
+    console.log(loggedInUserInfo);
+    dispatch(addUser(loggedInUserInfo));
   };
 
   // 회원가입버튼 클릭 핸들러
