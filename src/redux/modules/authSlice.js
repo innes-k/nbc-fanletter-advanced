@@ -11,11 +11,11 @@ const userInfoSlice = createSlice({
   },
   reducers: {
     addUser: (state, action) => {
-      const loggedInUser = action.payload;
-      return state.push(loggedInUser);
+      const { loggedInUserInfo, accessToken } = action.payload;
+      return { ...loggedInUserInfo, accessToken };
     },
   },
 });
 
-export const userInfo = userInfoSlice.reducer;
+export const userInfoReducer = userInfoSlice.reducer;
 export const { addUser } = userInfoSlice.actions;

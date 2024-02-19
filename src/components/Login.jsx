@@ -1,6 +1,6 @@
 import { getLoggedInUserInfo, login, signUp } from "apis/users";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
@@ -32,8 +32,7 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
     const accessToken = localStorage.getItem("loggedInUserToken");
     const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
 
-    console.log(loggedInUserInfo);
-    dispatch(addUser(loggedInUserInfo));
+    dispatch(addUser({ loggedInUserInfo, accessToken }));
   };
 
   // 회원가입버튼 클릭 핸들러

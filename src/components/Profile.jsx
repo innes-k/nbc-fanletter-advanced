@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 function Profile() {
@@ -11,6 +12,10 @@ function Profile() {
     window.confirm("이대로 수정하시겠습니까?");
     setIsEdited(!isEdited);
   };
+
+  // 유저정보 가져오기
+  const loggedinUserInfo = useSelector((state) => state.userInfoReducer);
+  console.log(loggedinUserInfo);
 
   return (
     <StContainer>
