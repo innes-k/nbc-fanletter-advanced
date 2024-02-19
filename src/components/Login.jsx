@@ -1,6 +1,6 @@
 import { getLoggedInUserInfo, login, signUp } from "apis/users";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { addUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
@@ -29,6 +29,7 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
       alert("입력하신 값을 확인해주세요.");
     }
 
+    // 로그인 유저정보 리듀서에 전달하기
     const accessToken = localStorage.getItem("loggedInUserToken");
     const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
 

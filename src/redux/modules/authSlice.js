@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import defaultUser from "../../assets/defaultUser.png";
 
 const userInfoSlice = createSlice({
   name: "userInfo",
@@ -6,7 +7,7 @@ const userInfoSlice = createSlice({
     accessToken: "",
     userId: "",
     success: "",
-    avatar: null,
+    avatar: defaultUser,
     nickname: "",
   },
   reducers: {
