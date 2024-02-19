@@ -18,16 +18,22 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
 
   // 로그인버튼 클릭 핸들러
   const onIsLoggedInHandler = () => {
-    login(userId, userPw);
-    isValidId &&
-      isValidPw &&
+    if (isValidId && isValidPw) {
+      login(userId, userPw);
       setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+    } else {
+      alert("입력하신 값을 확인해주세요.");
+    }
   };
 
   // 회원가입버튼 클릭 핸들러
   const onSignUpHandler = () => {
-    signUp(userId, userPw, userNickname);
-    isValidId && isValidPw && isValidNickname && onIsSignUpHandler();
+    if (isValidId && isValidPw && isValidNickname) {
+      signUp(userId, userPw, userNickname);
+      onIsSignUpHandler();
+    } else {
+      alert("입력하신 값을 확인해주세요.");
+    }
   };
 
   // 아이디 onChange

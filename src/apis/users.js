@@ -11,8 +11,13 @@ export const signUp = async (userId, userPw, userNickname) => {
 
 // 로그인
 export const login = async (userId, userPw) => {
-  await axios.post("https://moneyfulpublicpolicy.co.kr/login", {
-    id: userId,
-    password: userPw,
-  });
+  const response = await axios.post(
+    "https://moneyfulpublicpolicy.co.kr/login",
+    { id: userId, password: userPw }
+  );
+  const loggedInUserInfo = response.data;
+  window.localStorage.setItem(
+    "loggedInUserToken",
+    loggedInUserInfo.accessToken
+  );
 };
