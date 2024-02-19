@@ -15,9 +15,9 @@ export const login = async (userId, userPw) => {
     "https://moneyfulpublicpolicy.co.kr/login",
     { id: userId, password: userPw }
   );
+
+  // 로그인시 로컬스토리지에 토큰 저장하기
   const loggedInUserInfo = response.data;
-  window.localStorage.setItem(
-    "loggedInUserToken",
-    loggedInUserInfo.accessToken
-  );
+  const loggedInUserToken = loggedInUserInfo.accessToken;
+  localStorage.setItem("loggedInUserToken", loggedInUserToken);
 };
