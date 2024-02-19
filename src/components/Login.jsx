@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Login({ isLoggedIn, setIsLoggedIn }) {
@@ -14,6 +15,8 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
     setUserNickname("");
     setIsSignUp((prevIsSignUP) => !prevIsSignUP);
   };
+
+  const navigate = useNavigate();
 
   // 로그인버튼 클릭 핸들러
   const onIsLoggedInHandler = () => {
