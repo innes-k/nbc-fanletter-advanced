@@ -1,5 +1,5 @@
+import { login, signUp } from "apis/users";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Login({ isLoggedIn, setIsLoggedIn }) {
@@ -16,10 +16,9 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
     setIsSignUp((prevIsSignUP) => !prevIsSignUP);
   };
 
-  const navigate = useNavigate();
-
   // 로그인버튼 클릭 핸들러
   const onIsLoggedInHandler = () => {
+    login(userId, userPw);
     isValidId &&
       isValidPw &&
       setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
@@ -27,6 +26,7 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
 
   // 회원가입버튼 클릭 핸들러
   const onSignUpHandler = () => {
+    signUp(userId, userPw, userNickname);
     isValidId && isValidPw && isValidNickname && onIsSignUpHandler();
   };
 
