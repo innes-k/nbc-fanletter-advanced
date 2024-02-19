@@ -13,7 +13,7 @@ const userInfoSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       const { loggedInUserInfo, accessToken } = action.payload;
-      return { ...loggedInUserInfo, accessToken };
+      return { ...loggedInUserInfo, avatar: defaultUser, accessToken };
     },
   },
 });
