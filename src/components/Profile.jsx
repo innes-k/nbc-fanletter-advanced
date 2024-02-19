@@ -1,30 +1,36 @@
+import { editNickname } from "apis/users";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { editUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
 function Profile() {
-  const [isEdited, setIsEdited] = useState(false);
-
   // 유저정보 가져오기
   const { accessToken, id, avatar, nickname } = useSelector(
     (state) => state.userInfoReducer
   );
-  console.log(accessToken, id, avatar, nickname);
+
+  const [isEdited, setIsEdited] = useState(false);
+  const [newNickname, setNewNickname] = useState(nickname);
+  const [newAvatar, setNewAvatar] = useState(avatar);
 
   // 닉네임 수정
   const onEditNickname = (e) => {
     setNewNickname(e.target.value);
   };
 
-  const [newNickname, setNewNickname] = useState(nickname);
+  // 수정하기 - 취소 버튼 변환 handler
   const editBtnHandler = () => {
     setIsEdited(!isEdited);
   };
 
   // 수정하기 버튼 클릭
+  const dispatch = useDispatch();
   const editConfirmHandler = () => {
     if (window.confirm("이대로 수정하시겠습니까?")) {
       setIsEdited(!isEdited);
+      editNickname(newNickname, newAvatar, accessToken);
+      dispatch(editUser({ newNickname, newAvatar }));
     }
   };
 
@@ -32,7 +38,7 @@ function Profile() {
     <StContainer>
       <StProfileBox>
         <StH1>프로필 관리</StH1>
-        <StProfileImg src={avatar} alt="" />
+        <StProfileImg src={newAvatar} alt="" />
         {!isEdited ? (
           <StH2>{newNickname}</StH2>
         ) : (

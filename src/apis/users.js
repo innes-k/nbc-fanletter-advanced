@@ -35,3 +35,17 @@ export const getLoggedInUserInfo = async (token) => {
   );
   return response.data;
 };
+
+// 닉네임 수정하기
+export const editNickname = async (newNickname, newAvatar, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const updateData = {
+    nickname: newNickname,
+    avatar: newAvatar,
+  };
+  await axios.patch("https://moneyfulpublicpolicy.co.kr/profile", updateData, {
+    headers,
+  });
+};

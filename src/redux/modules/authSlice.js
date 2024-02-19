@@ -15,8 +15,12 @@ const userInfoSlice = createSlice({
       const { loggedInUserInfo, accessToken } = action.payload;
       return { ...loggedInUserInfo, avatar: defaultUser, accessToken };
     },
+    editUser: (state, action) => {
+      const { newNickname, newAvatar } = action.payload;
+      return { ...state, nickname: newNickname, avatar: newAvatar };
+    },
   },
 });
 
 export const userInfoReducer = userInfoSlice.reducer;
-export const { addUser } = userInfoSlice.actions;
+export const { addUser, editUser } = userInfoSlice.actions;
