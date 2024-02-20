@@ -4,31 +4,41 @@ import { v4 as uuid } from "uuid";
 import Button from "./common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addLetter } from "redux/modules/lettersSlice";
+import { postLetter } from "apis/letters";
 
 export default function AddForm() {
   // const { setLetters } = useContext(LetterContext);
   const dispatch = useDispatch();
+  const { nickname, avatar, accessToken } = useSelector(
+    (state) => state.userInfoReducer
+  );
 
-  const [nickname, setNickname] = useState("");
+  // const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");
 
   const onAddLetter = (event) => {
     event.preventDefault();
-    if (!nickname || !content) return alert("닉네임과 내용은 필수값입니다.");
+    if (!content) return alert("내용은 필수값입니다.");
 
-    const newLetter = {
-      id: uuid(),
-      nickname,
-      content,
-      avatar: null,
-      writedTo: member,
-      createdAt: new Date().toString(),
+    const newLetter = [
+      {
+        accessToken,
+        id: uuid(),
+        nickname,
+        content,
+        avatar,
+        writedTo: member,
+        createdAt: new Date().toString(),
+      },
+    ];
+
+    const fetchLetter = async () => {
+      await postLetter(...newLetter);
+      dispatch(addLetter(newLetter));
+      setContent("");
     };
-
-    dispatch(addLetter(newLetter));
-    setNickname("");
-    setContent("");
+    fetchLetter();
   };
 
   // 로그인 유저정보 리듀서에서 가져오기
