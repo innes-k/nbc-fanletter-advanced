@@ -13,7 +13,6 @@ export default function AddForm() {
     (state) => state.userInfoReducer
   );
 
-  // const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("카리나");
 

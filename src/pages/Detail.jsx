@@ -5,7 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "util/date";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteLetter, editLetter } from "redux/modules/lettersSlice";
+import { removeLetter, editLetter } from "redux/modules/lettersSlice";
+import { deleteLetter } from "apis/letters";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -15,16 +16,19 @@ export default function Detail() {
   const [editingText, setEditingText] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+
   const { avatar, nickname, createdAt, writedTo, content } = letters.find(
     (letter) => letter.id === id
   );
 
-  const onDeleteBtn = () => {
+  const onDeleteBtn = async () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
-
-    dispatch(deleteLetter(id));
-    navigate("/");
+    else {
+      await deleteLetter(id);
+      dispatch(removeLetter(id));
+      navigate("/");
+    }
   };
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
@@ -50,6 +54,7 @@ export default function Detail() {
           <time>{getFormattedDate(createdAt)}</time>
         </UserInfo>
         <ToMember>To: {writedTo}</ToMember>
+        {/* 아래 버튼들은 컴포넌트로 분리, 로컬스토리지 토큰과 letter의 토큰이 같으면 버튼컴포넌트 보여주기 */}
         {isEditing ? (
           <>
             <Textarea

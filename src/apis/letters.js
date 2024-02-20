@@ -8,3 +8,7 @@ export const getLetters = async () => {
 export const postLetter = async (newLetter) => {
   await axios.post("http://localhost:5002/letters", newLetter);
 };
+
+export const deleteLetter = async (id) => {
+  await axios.delete(`http://localhost:5002/letters/${id}`);
+};

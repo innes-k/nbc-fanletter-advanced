@@ -13,7 +13,7 @@ const lettersSlice = createSlice({
       const newLetter = action.payload;
       return [...state, ...newLetter];
     },
-    deleteLetter: (state, action) => {
+    removeLetter: (state, action) => {
       const letterId = action.payload;
       return state.filter((letter) => letter.id !== letterId);
     },
@@ -30,5 +30,5 @@ const lettersSlice = createSlice({
 });
 
 export const letters = lettersSlice.reducer;
-export const { initLetter, addLetter, deleteLetter, editLetter } =
+export const { initLetter, addLetter, removeLetter, editLetter } =
   lettersSlice.actions;

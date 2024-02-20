@@ -11,6 +11,12 @@ export default function LetterList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // 1. json server에서 letter 최신값 GET
+    // 2. 가져온 letter값을 letterSlice에 dispatch
+    // -> 화면 리렌더링시 최신 letter를 가져온다 (삭제 후 리렌더링시 오류나서 해결로 생각함)
+  }, []);
+
+  useEffect(() => {
     const letters = async () => {
       const data = await getLetters();
       dispatch(initLetter(data));
