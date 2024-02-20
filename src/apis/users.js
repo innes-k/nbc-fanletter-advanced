@@ -19,6 +19,7 @@ export const login = async (userId, userPw) => {
   // 로그인시 로컬스토리지에 토큰 저장하기
   const loggedInUserInfo = response.data;
   const loggedInUserToken = loggedInUserInfo.accessToken;
+  localStorage.clear();
   localStorage.setItem("loggedInUserToken", loggedInUserToken);
 };
 

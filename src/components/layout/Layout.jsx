@@ -1,10 +1,10 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function Layout({ isLoggedIn, setIsLoggedIn }) {
-  const onIsLoggedInHandler = () => {
+  const onIsLoggedOutHandler = () => {
     setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+    localStorage.clear();
   };
 
   return (
@@ -12,7 +12,7 @@ function Layout({ isLoggedIn, setIsLoggedIn }) {
       <StLink to="/">HOME</StLink>
       <StNavRight>
         <StLink to="/profile">내 프로필</StLink>
-        <StLink to="/login" onClick={onIsLoggedInHandler}>
+        <StLink to="/login" onClick={onIsLoggedOutHandler}>
           로그아웃
         </StLink>
       </StNavRight>

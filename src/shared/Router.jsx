@@ -3,19 +3,11 @@ import Profile from "components/Profile";
 import Layout from "components/layout/Layout";
 import Detail from "pages/Detail";
 import Home from "pages/Home";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export default function Router() {
-  // 토큰 유무에 따른 로그인상태 변경
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    if (localStorage.getItem("loggedInUserToken")) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
 
   return (
     <BrowserRouter>

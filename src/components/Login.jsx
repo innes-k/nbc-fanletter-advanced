@@ -23,17 +23,17 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
   // 로그인버튼 클릭 핸들러
   const onIsLoggedInHandler = async () => {
     if (isValidId && isValidPw) {
-      login(userId, userPw);
+      await login(userId, userPw);
       setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+
+      // 로그인 유저정보 리듀서에 전달하기
+      const accessToken = localStorage.getItem("loggedInUserToken");
+      const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
+
+      dispatch(addUser({ loggedInUserInfo, accessToken }));
     } else {
       alert("입력하신 값을 확인해주세요.");
     }
-
-    // 로그인 유저정보 리듀서에 전달하기
-    const accessToken = localStorage.getItem("loggedInUserToken");
-    const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
-
-    dispatch(addUser({ loggedInUserInfo, accessToken }));
   };
 
   // 회원가입버튼 클릭 핸들러
