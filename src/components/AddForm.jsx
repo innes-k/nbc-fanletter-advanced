@@ -76,10 +76,9 @@ const Form = styled.form`
 
 const InputWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   & label {
-    width: 80px;
+    width: 60px;
   }
   & input,
   textarea {
@@ -89,6 +88,9 @@ const InputWrapper = styled.div`
   & textarea {
     resize: none;
     height: 80px;
+  }
+  & p {
+    color: white;
   }
 `;
 
