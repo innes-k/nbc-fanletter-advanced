@@ -1,26 +1,19 @@
 import Login from "components/Login";
 import Profile from "components/Profile";
 import AuthLayout from "components/layout/AuthLayout";
-import Layout from "components/layout/Layout";
 import Detail from "pages/Detail";
 import Home from "pages/Home";
 import { useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 export default function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("loggedInUserToken");
 
   return (
     <BrowserRouter>
-      {!isLoggedIn ? (
-        // 토큰 있는 경우만 접근 가능
+      {!token ? (
+        //  토큰 없는 경우 login페이지만 뜨게
         <Routes>
           <Route path="*" element={<Navigate replace to="/login" />} />
           <Route
@@ -31,12 +24,8 @@ export default function Router() {
           />
         </Routes>
       ) : (
-        // 토큰 없는 경우 login페이지만 뜨게
-        // 1. home, detail, profile의 부모컴포넌트에서 로그인상태 체크
-        // -> outlet
-        // 2.
+        // 토큰 있는 경우만 접근 가능
         <>
-          {/* <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> */}
           <Routes>
             <Route path="*" element={<Navigate replace to="/" />} />
             <Route
@@ -45,13 +34,6 @@ export default function Router() {
                   isLoggedIn={isLoggedIn}
                   setIsLoggedIn={setIsLoggedIn}
                 />
-                // <>
-                //   <Layout
-                //     isLoggedIn={isLoggedIn}
-                //     setIsLoggedIn={setIsLoggedIn}
-                //   />
-                //   <Outlet />
-                // </>
               }
             >
               <Route path="/" element={<Home />} />
