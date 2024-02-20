@@ -18,6 +18,9 @@ export default function Detail() {
 
   const { id } = useParams();
   const letters = useSelector((state) => state.letters);
+  const userInfoToken = useSelector(
+    (state) => state.userInfoReducer.accessToken
+  );
 
   // 홈에서 클릭한 letter 찾기
   useEffect(() => {
@@ -28,7 +31,14 @@ export default function Detail() {
   // letter 삭제해서 없으면 return null
   if (!foundLetter) return null;
 
-  const { avatar, nickname, createdAt, writedTo, content } = foundLetter;
+  const { avatar, nickname, createdAt, writedTo, content, accessToken } =
+    foundLetter;
+
+  console.log(
+    userInfoToken,
+    accessToken,
+    localStorage.getItem("loggedInUserToken")
+  );
 
   // 삭제버튼 클릭
   const onDeleteBtn = async () => {
@@ -49,6 +59,7 @@ export default function Detail() {
     setIsEditing(false);
     setEditingText("");
   };
+
   return (
     <Container>
       <Link to="/">
@@ -66,7 +77,7 @@ export default function Detail() {
           <time>{getFormattedDate(createdAt)}</time>
         </UserInfo>
         <ToMember>To: {writedTo}</ToMember>
-        {/* 아래 버튼들은 컴포넌트로 분리, 로컬스토리지 토큰과 letter의 토큰이 같으면 버튼컴포넌트 보여주기 */}
+        {/* userInfoReducer에 저장된 토큰과 letter의 토큰이 같으면 수정 등의 버튼 보여주기 */}
         {isEditing ? (
           <>
             <Textarea
@@ -74,18 +85,26 @@ export default function Detail() {
               defaultValue={content}
               onChange={(event) => setEditingText(event.target.value)}
             />
-            <BtnsWrapper>
-              <Button text="취소" onClick={() => setIsEditing(false)} />
-              <Button text="수정완료" onClick={onEditDone} />
-            </BtnsWrapper>
+            {userInfoToken === accessToken && (
+              <>
+                <BtnsWrapper>
+                  <Button text="취소" onClick={() => setIsEditing(false)} />
+                  <Button text="수정완료" onClick={onEditDone} />
+                </BtnsWrapper>
+              </>
+            )}
           </>
         ) : (
           <>
             <Content>{content}</Content>
-            <BtnsWrapper>
-              <Button text="수정" onClick={() => setIsEditing(true)} />
-              <Button text="삭제" onClick={onDeleteBtn} />
-            </BtnsWrapper>
+            {localStorage.getItem("loggedInUserToken") === accessToken && (
+              <>
+                <BtnsWrapper>
+                  <Button text="수정" onClick={() => setIsEditing(true)} />
+                  <Button text="삭제" onClick={onDeleteBtn} />
+                </BtnsWrapper>
+              </>
+            )}
           </>
         )}
       </DetailWrapper>

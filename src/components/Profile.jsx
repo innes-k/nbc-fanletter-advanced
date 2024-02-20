@@ -13,6 +13,7 @@ function Profile() {
   const [isEdited, setIsEdited] = useState(false);
   const [newNickname, setNewNickname] = useState(nickname);
   const [newAvatar, setNewAvatar] = useState(avatar);
+  const [previewAvatar, setPreviewAvatar] = useState("");
 
   // 닉네임 수정
   const onEditNickname = (e) => {
@@ -24,7 +25,7 @@ function Profile() {
     setIsEdited(!isEdited);
   };
 
-  // 수정하기 버튼 클릭
+  // 수정완료 버튼 클릭
   const dispatch = useDispatch();
   const editConfirmHandler = () => {
     if (window.confirm("이대로 수정하시겠습니까?")) {
@@ -34,15 +35,37 @@ function Profile() {
     }
   };
 
+  // 이미지파일 업로드
+  const onImageHandler = (e) => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setPreviewAvatar(imageUrl);
+  };
+
   return (
     <StContainer>
       <StProfileBox>
         <StH1>프로필 관리</StH1>
-        <StProfileImg src={newAvatar} alt="" />
+        {previewAvatar ? (
+          <StProfileImg src={previewAvatar} alt="" />
+        ) : (
+          <StProfileImg src={newAvatar} alt="" />
+        )}
+
+        <input
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          onChange={onImageHandler}
+        />
         {!isEdited ? (
           <StH2>{newNickname}</StH2>
         ) : (
-          <input type="text" value={newNickname} onChange={onEditNickname} />
+          <input
+            type="text"
+            value={newNickname}
+            onChange={onEditNickname}
+            style={{ display: "none" }}
+          />
         )}
         <StH3>{id}</StH3>
         {!isEdited ? (
@@ -89,6 +112,7 @@ const StProfileImg = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 const StH2 = styled.p`
