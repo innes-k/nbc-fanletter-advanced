@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LetterCard from "./LetterCard";
 import { useEffect } from "react";
 import { getLetters } from "apis/letters";
-import { addLetter } from "redux/modules/lettersSlice";
+import { initLetter } from "redux/modules/lettersSlice";
 
 export default function LetterList() {
   const activeMember = useSelector((state) => state.member);
@@ -13,7 +13,7 @@ export default function LetterList() {
   useEffect(() => {
     const letters = async () => {
       const data = await getLetters();
-      dispatch(addLetter(data));
+      dispatch(initLetter(data));
     };
     letters();
   }, [dispatch]);

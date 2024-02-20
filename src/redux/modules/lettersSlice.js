@@ -6,6 +6,9 @@ const lettersSlice = createSlice({
   name: "letters",
   initialState: initialState,
   reducers: {
+    initLetter: (state, action) => {
+      return action.payload;
+    },
     addLetter: (state, action) => {
       const newLetter = action.payload;
       return [...state, ...newLetter];
@@ -27,4 +30,5 @@ const lettersSlice = createSlice({
 });
 
 export const letters = lettersSlice.reducer;
-export const { addLetter, deleteLetter, editLetter } = lettersSlice.actions;
+export const { initLetter, addLetter, deleteLetter, editLetter } =
+  lettersSlice.actions;
