@@ -1,7 +1,6 @@
-import fakeData from "fakeData.json";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = fakeData;
+const initialState = [];
 
 const lettersSlice = createSlice({
   name: "letters",
@@ -9,7 +8,7 @@ const lettersSlice = createSlice({
   reducers: {
     addLetter: (state, action) => {
       const newLetter = action.payload;
-      return [newLetter, ...state];
+      return [...state, ...newLetter];
     },
     deleteLetter: (state, action) => {
       const letterId = action.payload;

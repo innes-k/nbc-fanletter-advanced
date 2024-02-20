@@ -1,10 +1,22 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LetterCard from "./LetterCard";
+import { useEffect } from "react";
+import { getLetters } from "apis/letters";
+import { addLetter } from "redux/modules/lettersSlice";
 
 export default function LetterList() {
   const activeMember = useSelector((state) => state.member);
   const letters = useSelector((state) => state.letters);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const letters = async () => {
+      const data = await getLetters();
+      dispatch(addLetter(data));
+    };
+    letters();
+  }, [dispatch]);
 
   const filteredLetters = letters.filter(
     (letter) => letter.writedTo === activeMember
