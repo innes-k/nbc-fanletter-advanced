@@ -1,6 +1,6 @@
 import Avatar from "components/common/Avatar";
 import Button from "components/common/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getFormattedDate } from "util/date";
@@ -9,18 +9,28 @@ import { removeLetter, editLetter } from "redux/modules/lettersSlice";
 import { deleteLetter } from "apis/letters";
 
 export default function Detail() {
-  const dispatch = useDispatch();
-  const letters = useSelector((state) => state.letters);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editingText, setEditingText] = useState("");
+  const [foundLetter, setFoundLetter] = useState({});
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { id } = useParams();
+  const letters = useSelector((state) => state.letters);
 
-  const { avatar, nickname, createdAt, writedTo, content } = letters.find(
-    (letter) => letter.id === id
-  );
+  // 홈에서 클릭한 letter 찾기
+  useEffect(() => {
+    const selectedLetter = letters.find((letter) => letter.id === id);
+    setFoundLetter(selectedLetter);
+  }, [id, letters]);
 
+  // letter 삭제해서 없으면 return null
+  if (!foundLetter) return null;
+
+  const { avatar, nickname, createdAt, writedTo, content } = foundLetter;
+
+  // 삭제버튼 클릭
   const onDeleteBtn = async () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
@@ -30,6 +40,8 @@ export default function Detail() {
       navigate("/");
     }
   };
+
+  // 수정버튼 클릭
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
 
