@@ -1,6 +1,7 @@
 import { getLoggedInUserInfo, login, signUp } from "apis/users";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
@@ -19,12 +20,14 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
   };
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // 로그인버튼 클릭 핸들러
   const onIsLoggedInHandler = async () => {
     if (isValidId && isValidPw) {
       await login(userId, userPw);
-      setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+      // setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+      navigate("/");
 
       // 로그인 유저정보 리듀서에 전달하기
       const accessToken = localStorage.getItem("loggedInUserToken");

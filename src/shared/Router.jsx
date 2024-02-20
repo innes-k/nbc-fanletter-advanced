@@ -1,14 +1,36 @@
+import { getLoggedInUserInfo } from "apis/users";
 import Login from "components/Login";
 import Profile from "components/Profile";
 import AuthLayout from "components/layout/AuthLayout";
 import Detail from "pages/Detail";
 import Home from "pages/Home";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+// import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { addUser } from "redux/modules/authSlice";
 
 export default function Router() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const token = localStorage.getItem("loggedInUserToken");
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const token = localStorage.getItem("loggedInUserToken");
+
+  // 토큰값 가져오기
+  const token = useSelector((state) => state.userInfoReducer.accessToken);
+
+  // 새로고침시 토큰, 유저정보를 다시 dispatch로 전달
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetch = async () => {
+      const accessToken = localStorage.getItem("loggedInUserToken");
+      if (!accessToken) {
+        return;
+      }
+      const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
+
+      dispatch(addUser({ loggedInUserInfo, accessToken }));
+    };
+    fetch();
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -19,7 +41,9 @@ export default function Router() {
           <Route
             path="/login"
             element={
-              <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+              <Login
+              // isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
+              />
             }
           />
         </Routes>
@@ -31,8 +55,8 @@ export default function Router() {
             <Route
               element={
                 <AuthLayout
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
+                // isLoggedIn={isLoggedIn}
+                // setIsLoggedIn={setIsLoggedIn}
                 />
               }
             >

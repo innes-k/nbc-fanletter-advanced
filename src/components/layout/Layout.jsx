@@ -1,10 +1,16 @@
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
 function Layout({ isLoggedIn, setIsLoggedIn }) {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const onIsLoggedOutHandler = () => {
-    setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+    // setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
+    // navigate("/login");
     localStorage.clear();
+    dispatch(deleteUser());
   };
 
   return (
