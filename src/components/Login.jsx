@@ -26,7 +26,6 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
   const onIsLoggedInHandler = async () => {
     if (isValidId && isValidPw) {
       await login(userId, userPw);
-      // setIsLoggedIn((prevIsLoggedIn) => !prevIsLoggedIn);
       navigate("/");
 
       // 로그인 유저정보 리듀서에 전달하기
