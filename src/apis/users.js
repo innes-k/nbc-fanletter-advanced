@@ -20,6 +20,7 @@ export const login = async (userId, userPw) => {
   const loggedInUserInfo = response.data;
   const loggedInUserToken = loggedInUserInfo.accessToken;
   localStorage.setItem("loggedInUserToken", loggedInUserToken);
+  localStorage.setItem("userId", loggedInUserInfo.userId);
 };
 
 // 로그인된 유저정보 가져오기

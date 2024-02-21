@@ -18,28 +18,20 @@ export default function Detail() {
 
   const { id } = useParams();
   const letters = useSelector((state) => state.letters);
-  const userInfoToken = useSelector(
-    (state) => state.userInfoReducer.accessToken
-  );
 
   // 홈에서 클릭한 letter 찾기 (foundLetter)
   useEffect(() => {
     const selectedLetter = letters.find((letter) => letter.id === id);
     setFoundLetter(selectedLetter);
   }, [id, letters]);
+  console.log(foundLetter);
 
   // letter 삭제해서 없으면 return null
   if (!foundLetter) return null;
 
   // foundLetter에서 letter 정보 가져오기
-  const { avatar, nickname, createdAt, writedTo, content, accessToken } =
+  const { avatar, nickname, createdAt, writedTo, content, userId } =
     foundLetter;
-
-  console.log(
-    userInfoToken,
-    accessToken,
-    localStorage.getItem("loggedInUserToken")
-  );
 
   // 삭제버튼 클릭
   const onDeleteBtn = async () => {
@@ -86,7 +78,7 @@ export default function Detail() {
               defaultValue={content}
               onChange={(event) => setEditingText(event.target.value)}
             />
-            {userInfoToken === accessToken && (
+            {userId === localStorage.getItem("userId") && (
               <>
                 <BtnsWrapper>
                   <Button text="취소" onClick={() => setIsEditing(false)} />
@@ -98,7 +90,7 @@ export default function Detail() {
         ) : (
           <>
             <Content>{content}</Content>
-            {localStorage.getItem("loggedInUserToken") === accessToken && (
+            {userId === localStorage.getItem("userId") && (
               <>
                 <BtnsWrapper>
                   <Button text="수정" onClick={() => setIsEditing(true)} />

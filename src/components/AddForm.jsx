@@ -9,7 +9,7 @@ import { postLetter } from "apis/letters";
 export default function AddForm() {
   // const { setLetters } = useContext(LetterContext);
   const dispatch = useDispatch();
-  const { nickname, avatar, accessToken } = useSelector(
+  const { nickname, avatar, id } = useSelector(
     (state) => state.userInfoReducer
   );
 
@@ -22,7 +22,7 @@ export default function AddForm() {
 
     const newLetter = [
       {
-        accessToken,
+        userId: id,
         id: uuid(),
         nickname,
         content,
@@ -40,14 +40,11 @@ export default function AddForm() {
     fetchLetter();
   };
 
-  // 로그인 유저정보 리듀서에서 가져오기
-  const loggedInUser = useSelector((state) => state.userInfoReducer);
-
   return (
     <Form onSubmit={onAddLetter}>
       <InputWrapper>
         <label>닉네임:</label>
-        <p>{loggedInUser.nickname}</p>
+        <p>{nickname}</p>
       </InputWrapper>
       <InputWrapper>
         <label>내용:</label>
