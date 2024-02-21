@@ -37,15 +37,20 @@ export const getLoggedInUserInfo = async (token) => {
 };
 
 // 닉네임, 프로필이미지 수정하기
-export const editNickname = async (newNickname, newAvatar, token) => {
+export const editProfileInfo = async (newNickname, newAvatar, token) => {
+  const formData = new FormData();
+  formData.append("avatar", newAvatar);
+  formData.append("nickname", newNickname);
+
   const headers = {
+    "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${token}`,
   };
-  const updateData = {
-    nickname: newNickname,
-    avatar: newAvatar,
-  };
-  await axios.patch("https://moneyfulpublicpolicy.co.kr/profile", updateData, {
+  // const updateData = {
+  //   nickname: newNickname,
+  //   avatar: newAvatar,
+  // };
+  await axios.patch("https://moneyfulpublicpolicy.co.kr/profile", formData, {
     headers,
   });
 };

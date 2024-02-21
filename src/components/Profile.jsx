@@ -1,10 +1,26 @@
-import { editNickname } from "apis/users";
-import React, { useState } from "react";
+import { editProfileInfo, getLoggedInUserInfo } from "apis/users";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser } from "redux/modules/authSlice";
+import { addUser, editUser } from "redux/modules/authSlice";
 import styled from "styled-components";
 
 function Profile() {
+  const dispatch = useDispatch();
+
+  // 새로고침시 토큰, 유저정보를 다시 dispatch로 전달
+  useEffect(() => {
+    const fetch = async () => {
+      const accessToken = localStorage.getItem("loggedInUserToken");
+      if (!accessToken) {
+        return;
+      }
+      const loggedInUserInfo = await getLoggedInUserInfo(accessToken);
+
+      dispatch(addUser({ loggedInUserInfo, accessToken }));
+    };
+    fetch();
+  }, [dispatch]);
+
   // 유저정보 가져오기
   const { accessToken, id, avatar, nickname } = useSelector(
     (state) => state.userInfoReducer
@@ -12,8 +28,12 @@ function Profile() {
 
   const [isEdited, setIsEdited] = useState(false);
   const [newNickname, setNewNickname] = useState(nickname);
+  // PATCH로 전달하기위한 newAvatar
   const [newAvatar, setNewAvatar] = useState(avatar);
-  const [previewAvatar, setPreviewAvatar] = useState("");
+  // 미리보기 위한 previewAvatar
+  const [previewAvatar, setPreviewAvatar] = useState(avatar);
+  // 업로드한 파일 임시저장 위한 avatarFile
+  const [avatarFile, setAvatarFile] = useState(null);
 
   // 닉네임 수정
   const onEditNickname = (e) => {
@@ -25,33 +45,67 @@ function Profile() {
     setIsEdited(!isEdited);
   };
 
-  // 수정완료 버튼 클릭
-  const dispatch = useDispatch();
-  const editConfirmHandler = () => {
-    if (window.confirm("이대로 수정하시겠습니까?")) {
-      setIsEdited(!isEdited);
-      editNickname(newNickname, newAvatar, accessToken);
-      dispatch(editUser({ newNickname, newAvatar }));
-    }
-  };
-
-  // 이미지파일 업로드
+  // 이미지파일 preview
   const onImageHandler = (e) => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
     setPreviewAvatar(imageUrl);
+    setAvatarFile(file);
+  };
+
+  // 수정완료 버튼 클릭
+  const editConfirmHandler = async () => {
+    if (window.confirm("이대로 수정하시겠습니까?")) {
+      // // 서버에 PATCH 요청
+      // previewAvatar && setNewAvatar(avatarFile);
+      // await editProfileInfo(newNickname, newAvatar, accessToken);
+
+      if (avatarFile) {
+        await editProfileInfo(newNickname, avatarFile, accessToken);
+        setNewAvatar(avatarFile);
+      }
+
+      // userInfoReducer 리듀서 state 변경
+      dispatch(editUser({ newNickname, newAvatar }));
+      setIsEdited(!isEdited);
+    }
   };
 
   return (
     <StContainer>
       <StProfileBox>
         <StH1>프로필 관리</StH1>
-        {previewAvatar ? (
-          <StProfileImg src={previewAvatar} alt="" />
-        ) : (
-          <StProfileImg src={newAvatar} alt="" />
+        {isEdited === false && (
+          <>
+            <StProfileImg src={newAvatar} alt="" />
+            <StH2>{newNickname}</StH2>
+            <StH3>{id}</StH3>
+            <button onClick={editBtnHandler}>수정하기</button>
+          </>
+        )}
+        {isEdited === true && (
+          <>
+            <label htmlFor="fileInput">
+              <StProfileImg src={previewAvatar} alt="" />
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              onChange={onImageHandler}
+              style={{ display: "none" }}
+              // style={{ position: "absolute", left: "-9999px" }}
+            />
+            <input type="text" value={newNickname} onChange={onEditNickname} />
+            <StH3>{id}</StH3>
+            <StEditConfirmBtns>
+              <button onClick={editBtnHandler}>취소</button>
+              <button onClick={editConfirmHandler}>수정완료</button>
+            </StEditConfirmBtns>
+          </>
         )}
 
+        {/* <StProfileImg src={newAvatar} alt="" />
         <input
           type="file"
           accept=".png, .jpg, .jpeg"
@@ -75,7 +129,7 @@ function Profile() {
             <button onClick={editBtnHandler}>취소</button>
             <button onClick={editConfirmHandler}>수정완료</button>
           </StEditConfirmBtns>
-        )}
+        )} */}
       </StProfileBox>
     </StContainer>
   );

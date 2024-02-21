@@ -22,7 +22,7 @@ export default function Detail() {
     (state) => state.userInfoReducer.accessToken
   );
 
-  // 홈에서 클릭한 letter 찾기
+  // 홈에서 클릭한 letter 찾기 (foundLetter)
   useEffect(() => {
     const selectedLetter = letters.find((letter) => letter.id === id);
     setFoundLetter(selectedLetter);
@@ -31,6 +31,7 @@ export default function Detail() {
   // letter 삭제해서 없으면 return null
   if (!foundLetter) return null;
 
+  // foundLetter에서 letter 정보 가져오기
   const { avatar, nickname, createdAt, writedTo, content, accessToken } =
     foundLetter;
 
