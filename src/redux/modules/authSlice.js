@@ -17,8 +17,8 @@ const userInfoSlice = createSlice({
       return { ...loggedInUserInfo, avatar: defaultUser, accessToken };
     },
     editUser: (state, action) => {
-      const { newNickname, newAvatar } = action.payload;
-      return { ...state, nickname: newNickname, avatar: newAvatar };
+      const { newNickname, avatarFile } = action.payload;
+      return { ...state, nickname: newNickname, avatar: avatarFile };
     },
     deleteUser: (state, action) => {
       return initialState;

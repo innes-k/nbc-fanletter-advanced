@@ -52,7 +52,7 @@ function Profile() {
     setPreviewAvatar(imageUrl);
     setAvatarFile(file);
   };
-
+  console.log("전 이미지", avatar);
   // 수정완료 버튼 클릭
   const editConfirmHandler = async () => {
     if (window.confirm("이대로 수정하시겠습니까?")) {
@@ -61,15 +61,19 @@ function Profile() {
       // await editProfileInfo(newNickname, newAvatar, accessToken);
 
       if (avatarFile) {
+        setNewAvatar(previewAvatar);
         await editProfileInfo(newNickname, avatarFile, accessToken);
-        setNewAvatar(avatarFile);
+      } else {
+        await editProfileInfo(newNickname, newAvatar, accessToken);
       }
+      console.log("PATCH로 보낸 avatar", avatarFile);
 
       // userInfoReducer 리듀서 state 변경
-      dispatch(editUser({ newNickname, newAvatar }));
+      dispatch(editUser({ newNickname, avatarFile }));
       setIsEdited(!isEdited);
     }
   };
+  console.log("후 이미지", avatar);
 
   return (
     <StContainer>
@@ -94,7 +98,6 @@ function Profile() {
               accept=".png, .jpg, .jpeg"
               onChange={onImageHandler}
               style={{ display: "none" }}
-              // style={{ position: "absolute", left: "-9999px" }}
             />
             <input type="text" value={newNickname} onChange={onEditNickname} />
             <StH3>{id}</StH3>
